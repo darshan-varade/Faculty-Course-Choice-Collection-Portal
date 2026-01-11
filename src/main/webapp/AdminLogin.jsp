@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Course Choice Collection Portal</title>
+    <link rel="stylesheet" href="CSS/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Portal</h2>
+            </div>
+            <ul class="sidebar-menu">
+                <li class="menu-item"><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+                <li class="menu-item"><a href="AdminLogin.jsp"><i class="fas fa-user-shield"></i> Admin</a></li>
+                <li class="menu-item dropdown">
+                    <a href="#" class="dropdown-toggle"><i class="fas fa-user"></i> Faculty <i class="fas fa-caret-down"></i></a>
+                    <ul class="dropdown-content">
+                        <li><a href="#view-profile">View Profile</a></li>
+                        <li><a href="#edit-profile">Edit Profile</a></li>
+                    </ul>
+                </li>
+                <li class="menu-item"><a href="#settings"><i class="fas fa-cog"></i> Settings</a></li>
+            </ul>
+        </aside>
+        <div class="main-content">
+            <nav class="navbar">
+                <div class="navbar-left">
+                    <span class="menu-toggle"><i class="fas fa-bars"></i></span>
+                </div>
+                <div class="navbar-right">
+                    <div class="nav-item dropdown">
+                        <span class="dropdown-toggle"><i class="fas fa-bell"></i> Notifications <i class="fas fa-caret-down"></i></span>
+                        <ul class="dropdown-content">
+                            <li><a href="#notifications">No new notifications</a></li>
+                        </ul>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <span class="dropdown-toggle"><i class="fas fa-envelope"></i> Messages <i class="fas fa-caret-down"></i></span>
+                        <ul class="dropdown-content">
+                            <li><a href="#messages">No new messages</a></li>
+                        </ul>
+                    </div>
+                    <div class="nav-item dropdown">
+                        <span class="dropdown-toggle"><i class="fas fa-user"></i> Profile <i class="fas fa-caret-down"></i></span>
+                        <ul class="dropdown-content">
+                            <li><a href="#logout">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="content">
+                <form action="AdminLogin.jsp">
+                    <input type="text" name="username" placeholder="Enter Username" />
+                    <input type="password" name="password" placeholder="Enter Password" />
+                    <input type="submit" value="Submit" />
+                </form>
+                <div id="dynamic-content"></div>
+                <%
+                try {
+                    String username = request.getParameter("username");
+                    String password = request.getParameter("password");
+                    if(username.equals("Admin") && password.equals("1234")) {
+                        response.sendRedirect("AdminOperations.html");
+                    } else {
+                        %>
+                        <p>Invalid Username or Password!!</p>
+                        <%
+                        response.sendRedirect("AdminLogin.jsp");
+                    }
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }
+                %>
+            </div>
+            <footer class="footer">
+                <p>&copy; 2024 Faculty Course Choice Collection Portal. All rights reserved.</p>
+                <ul class="footer-links">
+                    <li><a href="#terms-of-service">Terms of Service</a></li>
+                    <li><a href="#privacy-policy">Privacy Policy</a></li>
+                    <li><a href="#contact-us">Contact Us</a></li>
+                </ul>
+            </footer>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.dropdown-toggle').forEach(item => {
+                item.addEventListener('click', event => {
+                    event.preventDefault();
+                    const dropdownContent = item.nextElementSibling;
+                    dropdownContent.style.display = (dropdownContent.style.display === 'block') ? 'none' : 'block';
+                });
+            });
+
+            window.onclick = function(event) {
+                if (!event.target.matches('.dropdown-toggle')) {
+                    document.querySelectorAll('.dropdown-content').forEach(dropdown => {
+                        dropdown.style.display = 'none';
+                    });
+                }
+            };
+        });
+    </script>
+</body>
+</html>
